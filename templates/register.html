@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/Users/aayushbhatta/Documents/VS/Task/ArtistManagement1/static/style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <title>Register</title>
 </head>
 <body>
@@ -30,7 +30,7 @@
       <button class="login-button" type="submit">Register</button>
 
       <h5 class="dont-have-an-account">
-        Already have an account? <a href=/Users/aayushbhatta/Documents/VS/Practice/Practice2/login.html><b>Login</b></a>
+        Already have an account? <a href="{{ url_for('login') }}"><b>Login</b></a>
       </h5>
     </form>
   </div>
