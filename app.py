@@ -16,11 +16,11 @@ def get_db_connection():
 def home():
     if 'user_id' in session:
         return redirect('/dashboard')
-    return redirect('/login')
+    return redirect('/index')
 
-# Login route
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+# index route
+@app.route('/index', methods=['GET', 'POST'])
+def index():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -32,7 +32,7 @@ def login():
             return redirect('/dashboard')
         else:
             return "Invalid credentials"
-    return render_template('login.html')
+    return render_template('index.html')
 
 
 # Register route
@@ -49,27 +49,27 @@ def register():
         except sqlite3.IntegrityError:
             return "Username or Email already exists"
         conn.close()
-        return redirect('/login')
+        return redirect('/index')
     return render_template('register.html')
 
 # Dashboard route
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect('/index')
     return render_template('dashboard.html')
 
 # Logout route
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
-    return redirect('/login')
+    return redirect('/index')
 
 
 @app.route('/users', methods=['GET', 'POST'])
 def users():
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect('/index')
 
     conn = get_db_connection()
 
@@ -89,7 +89,7 @@ def users():
 
 def artists():
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect('/index')
 
     conn = get_db_connection()
 
@@ -137,7 +137,7 @@ def show_artists():
 @app.route('/artists/<int:artist_id>/songs', methods=['GET', 'POST'])
 def songs(artist_id):
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect('/index')
 
     conn = get_db_connection()
 
@@ -157,7 +157,7 @@ def songs(artist_id):
 @app.route('/users/add', methods=['GET', 'POST'])
 def add_user():
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect('/index')
 
     if request.method == 'POST':
         username = request.form['username']
@@ -181,7 +181,7 @@ def add_user():
 @app.route('/users/edit/<int:user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect('/index')
 
     conn = get_db_connection()
     user = conn.execute('SELECT * FROM User WHERE id = ?', (user_id,)).fetchone()
@@ -207,7 +207,7 @@ def edit_user(user_id):
 @app.route('/users/delete/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect('/index')
 
     conn = get_db_connection()
     conn.execute('DELETE FROM User WHERE id = ?', (user_id,))
@@ -237,7 +237,7 @@ def update_user():
 # @app.route('/artists/add', methods=['GET', 'POST'])
 # def add_artist():
 #     if 'user_id' not in session:
-#         return redirect('/login')
+#         return redirect('/index')
 
 #     if request.method == 'POST':
 #         name = request.form['name']
@@ -261,7 +261,7 @@ def update_user():
 # @app.route('/artists/edit/<int:artist_id>', methods=['GET', 'POST'])
 # def edit_artist(artist_id):
 #     if 'user_id' not in session:
-#         return redirect('/login')
+#         return redirect('/index')
 
 #     conn = get_db_connection()
 #     artist = conn.execute('SELECT * FROM Artist WHERE id = ?', (artist_id,)).fetchone()
@@ -288,7 +288,7 @@ def update_user():
 # @app.route('/artists/delete/<int:artist_id>', methods=['DELETE'])
 # def delete_artist(artist_id):
 #     if 'user_id' not in session:
-#         return redirect('/login')
+#         return redirect('/index')
 
 #     conn = get_db_connection()
 #     conn.execute('DELETE FROM Artist WHERE id = ?', (artist_id,))
@@ -302,7 +302,7 @@ def update_user():
 @app.route('/artists/add', methods=['GET', 'POST'])
 def add_artist():
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect('/index')
 
     if request.method == 'POST':
         name = request.form['name']
@@ -334,7 +334,7 @@ def add_artist():
 @app.route('/artists/edit/<int:artist_id>', methods=['GET', 'POST'])
 def edit_artist(artist_id):
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect('/index')
 
     conn = get_db_connection()
     artist = conn.execute('SELECT * FROM Artist WHERE id = ?', (artist_id,)).fetchone()
@@ -364,7 +364,7 @@ def edit_artist(artist_id):
 @app.route('/artists/delete/<int:artist_id>', methods=['DELETE'])
 def delete_artist(artist_id):
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect('/index')
 
     conn = get_db_connection()
     conn.execute('DELETE FROM Artist WHERE id = ?', (artist_id,))
@@ -377,7 +377,7 @@ def delete_artist(artist_id):
 @app.route('/artists/<int:artist_id>/songs', methods=['GET', 'POST'])
 def manage_songs(artist_id):
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect('/index')
 
     conn = get_db_connection()
 
