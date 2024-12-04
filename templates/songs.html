@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styleT.css">
+    <title>Songs by {{ artist.name }}</title>
+</head>
+<body>
+    <h1>Songs by {{ artist.name }}</h1>
+    <div class="add-container">
+        <form method="POST">
+            <input type="text" name="title" placeholder="Song Title" required>
+            <input type="text" name="album_name" placeholder="Album Name" required>
+            <input type="text" name="genre" placeholder="Genre" required>
+            <button type="submit" class="add">Add Song</button>
+        </form>
+    </div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Album Name</th>
+            <th>Genre</th>
+        </tr>
+        {% for song in songs %}
+        <tr>
+            <td>{{ song.id }}</td>
+            <td>{{ song.title }}</td>
+            <td>{{ song.album_name }}</td>
+            <td>{{ song.genre }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

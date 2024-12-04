@@ -7,9 +7,9 @@ app.secret_key = 'your_secret_key'
 # Database connection
 def get_db_connection():
     conn = sqlite3.connect('database/app.db', check_same_thread=False)
-    conn.row_factory = sqlite3.Row  # Enable dict-like row access
     conn.execute('PRAGMA journal_mode=WAL;')  # Enable WAL mode for better concurrency
     return conn
+
 
 # Home route
 @app.route('/')
@@ -28,12 +28,11 @@ def login():
         user = conn.execute('SELECT * FROM User WHERE username = ? AND password = ?', (username, password)).fetchone()
         conn.close()
         if user:
-            session['user_id'] = user['id']  # Accessing id correctly as a dictionary key
+            session['user_id'] = user['id']
             return redirect('/dashboard')
         else:
             return "Invalid credentials"
     return render_template('login.html')
-
 
 # Register route
 @app.route('/register', methods=['GET', 'POST'])

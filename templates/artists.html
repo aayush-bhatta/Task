@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Artists</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styleT.css') }}">
+</head>
+<body>
+    <h1>Artist Management</h1>
+    <a href="/artists/add">Add New Artist</a>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Date of Birth</th>
+            <th>Gender</th>
+            <th>Address</th>
+            <th>First Release Year</th>
+            <th>No. of Albums Released</th>
+            <th>Actions</th>
+        </tr>
+        {% for artist in artists %}
+        <tr>
+            <td>{{ artist['id'] }}</td>
+            <td>{{ artist['name'] }}</td>
+            <td>{{ artist['dob'] }}</td>
+            <td>{{ artist['gender'] }}</td>
+            <td>{{ artist['address'] }}</td>
+            <td>{{ artist['first_release_year'] }}</td>
+            <td>{{ artist['no_of_albums_released'] }}</td>
+            <td>
+                <a href="/artists/edit/{{ artist['id'] }}">Edit</a> |
+                <form action="/artists/delete/{{ artist['id'] }}" method="POST" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                </form> |
+                <a href="/artists/{{ artist['id'] }}/songs">View (Musics)</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
